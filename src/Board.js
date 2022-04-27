@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Cell from "./Cell";
 import "./Board.css";
+import _ from "lodash";
 
 /** Game board of Lights out.
  *
@@ -27,13 +28,27 @@ import "./Board.css";
  *
  **/
 
+function chooseTorF(chanceLightStartsOn){
+  const randNum = _.random(0,1);
+
+  return randNum > chanceLightStartsOn ? 'f' : 't';
+}
+
 function Board({ nrows, ncols, chanceLightStartsOn }) {
   const [board, setBoard] = useState(createBoard());
 
   /** create a board nrows high/ncols wide, each cell randomly lit or unlit */
   function createBoard() {
     let initialBoard = [];
-    // TODO: create array-of-arrays of true/false values
+    for(let i = 0; i < nrows; i++){
+
+      let row = [];
+
+      for(let j = 0; j < ncols; j++){
+        row.push(chooseTorF(chanceLightStartsOn))
+      }
+      initialBoard.push(row)
+    }
     return initialBoard;
   }
 
@@ -68,6 +83,12 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
   // make table board
 
   // TODO
+
+  return (
+    <div>
+      {board.map()}
+    </div>
+  )
 }
 
 export default Board;

@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "*",
     "@testing-library/react": "*",
     "@testing-library/user-event": "*",
+    "lodash": "^4.17.21",
     "react": "*",
     "react-dom": "*",
     "react-scripts": "*",
@@ -15,7 +16,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "test:debug": "react-scripts --inspect-brk test --runInBand"
   },
   "eslintConfig": {
     "extends": "react-app"
