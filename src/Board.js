@@ -71,11 +71,22 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
         }
       };
 
-      // TODO: Make a (deep) copy of the oldBoard
+        //Make a (deep) copy of the oldBoard
+        // console.log([...oldBoard])
 
-      // TODO: in the copy, flip this cell and the cells around it
+      const boardCopy = oldBoard.map((row) => [...row]);
 
-      // TODO: return the copy
+      //in the copy, flip this cell and the cells around it
+
+      flipCell(y, x, boardCopy);
+      flipCell(y + 1, x, boardCopy);
+      flipCell(y - 1, x, boardCopy);
+      flipCell(y, x + 1, boardCopy);
+      flipCell(y, x - 1, boardCopy);
+
+      // return the copy
+
+      return boardCopy;
     });
   }
 
@@ -84,10 +95,9 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
   // TODO
 
   // make table board
-  // [[f, f, f], [t, t, f], [f, f, f]]
 
   // TODO
-  // console.log("board", board);
+  console.log("board", board);
 
   return (
     <table>
@@ -100,7 +110,6 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
                   <Cell
                     flipCellsAroundMe={() => flipCellsAround(`${x}-${y}`)}
                     isLit={cell}
-                    index = {`${x}-${y}`}
                   />
                 );
               })}
