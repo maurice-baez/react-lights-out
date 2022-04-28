@@ -28,10 +28,10 @@ import _ from "lodash";
  *
  **/
 
-function chooseTorF(chanceLightStartsOn){
-  const randNum = _.random(0,1);
+function chooseTorF(chanceLightStartsOn) {
+  const randNum = _.random(0, 1);
 
-  return randNum > chanceLightStartsOn ? 'f' : 't';
+  return randNum > chanceLightStartsOn ? false : true;
 }
 
 function Board({ nrows, ncols, chanceLightStartsOn }) {
@@ -40,25 +40,28 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
   /** create a board nrows high/ncols wide, each cell randomly lit or unlit */
   function createBoard() {
     let initialBoard = [];
-    for(let i = 0; i < nrows; i++){
-
+    for (let i = 0; i < nrows; i++) {
       let row = [];
 
-      for(let j = 0; j < ncols; j++){
-        row.push(chooseTorF(chanceLightStartsOn))
+      for (let j = 0; j < ncols; j++) {
+        row.push(chooseTorF(chanceLightStartsOn));
       }
-      initialBoard.push(row)
+      initialBoard.push(row);
     }
     return initialBoard;
   }
 
   function hasWon() {
-    // TODO: check the board in state to determine whether the player has won.
+    // check the board in state to determine whether the player has won.
+    for (let row of board) {
+      if (row.includes(true)) return false;
+    }
+    return true;
   }
 
   function flipCellsAround(coord) {
-    setBoard(oldBoard => {
-      const [y, x] = coord.split("-").map(Number);
+    setBoard((oldBoard) => {
+      const [y, x] = coord.split("-").map(Number); // '1-2' -> ['1','2'] -> [1,2]
 
       const flipCell = (y, x, boardCopy) => {
         // if this coord is actually on board, flip it
@@ -81,14 +84,32 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
   // TODO
 
   // make table board
+  // [[f, f, f], [t, t, f], [f, f, f]]
 
   // TODO
+  // console.log("board", board);
 
   return (
-    <div>
-      {board.map()}
-    </div>
-  )
+    <table>
+      <tbody>
+        {board.map((row, x) => {
+          return (
+            <tr>
+              {row.map((cell, y) => {
+                return (
+                  <Cell
+                    flipCellsAroundMe={() => flipCellsAround(`${x}-${y}`)}
+                    isLit={cell}
+                    index = {`${x}-${y}`}
+                  />
+                );
+              })}
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  );
 }
 
 export default Board;
